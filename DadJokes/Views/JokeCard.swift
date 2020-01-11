@@ -26,12 +26,12 @@ struct JokeCard: View {
 					
 					Text(self.joke.setup)
 						.font(.title)
-						//.lineLimit(10)
+						.lineLimit(10)
 						.padding([.horizontal])
 					
 					Text(self.joke.punchline)
 						.font(.headline)
-						//.lineLimit(10)
+						.lineLimit(10)
 						.padding([.horizontal, .bottom])
 						.blur(radius: self.showingPunchline ? 0 : 6)
 						.opacity(self.showingPunchline ? 1 : 0.25)
