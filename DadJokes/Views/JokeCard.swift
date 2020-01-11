@@ -30,7 +30,7 @@ struct JokeCard: View {
 						.padding([.horizontal])
 					
 					Text(self.joke.punchline)
-						.font(.title)
+						.font(.headline)
 						.lineLimit(10)
 						.padding([.horizontal, .bottom])
 						.blur(radius: self.showingPunchline ? 0 : 6)
