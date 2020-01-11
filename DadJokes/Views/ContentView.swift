@@ -15,8 +15,7 @@ struct ContentView: View {
 	]) var jokes: FetchedResults<Joke>
 	@State private var showingAddJoke = false
 	
-    var body: some View {
-		
+	var body: some View {
 		ZStack(alignment: .top) {
 			LinearGradient(gradient: Gradient(colors: [Color("Start"), Color("Middle"), Color("End")]), startPoint: .top, endPoint: .bottom)
 			
@@ -41,21 +40,19 @@ struct ContentView: View {
 		.sheet(isPresented: $showingAddJoke) {
 			AddView().environment(\.managedObjectContext, self.moc)
 		}
-    }
+	}
 	
 	func removeJokes(at offsets: IndexSet) {
 		for index in offsets {
 			let joke = jokes[index]
 			moc.delete(joke)
 		}
-		
 		try? moc.save()
-		
 	}
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+	static var previews: some View {
+		ContentView()
+	}
 }
