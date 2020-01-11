@@ -14,14 +14,11 @@ struct JokeCard: View {
 	@State private var showingPunchline = false
 	@State private var randomNumber = Int.random(in: 1...4)
 	@State private var dragAmount = CGSize.zero
-	
 	var joke: Joke
 	
-    var body: some View {
+	var body: some View {
 		VStack {
-			
 			GeometryReader { geo in
-			
 				VStack {
 					Image("Dad\(self.randomNumber)")
 						.resizable()
@@ -49,7 +46,7 @@ struct JokeCard: View {
 					.onTapGesture {
 						withAnimation {
 							self.showingPunchline.toggle()
-					}
+						}
 				}
 				.rotation3DEffect(.degrees(-Double(geo.frame(in: .global).minX) / 10), axis: (x: 0, y: 1, z: 0))
 			}
@@ -60,35 +57,35 @@ struct JokeCard: View {
 		.frame(minHeight: 0, maxHeight: .infinity)
 		.frame(width: 300)
 		.offset(y: dragAmount.height)
-	.gesture(
-		DragGesture()
-			.onChanged { self.dragAmount = $0.translation }
-			.onEnded { value in
-				if self.dragAmount.height < -200 {
-					withAnimation {
-						self.dragAmount = CGSize(width: 0, height: -1000)
-						
-						DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-							self.moc.delete(self.joke)
-							// try? self.moc.save()
+		.gesture(
+			DragGesture()
+				.onChanged { self.dragAmount = $0.translation }
+				.onEnded { value in
+					if self.dragAmount.height < -200 {
+						withAnimation {
+							self.dragAmount = CGSize(width: 0, height: -1000)
+							
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+								self.moc.delete(self.joke)
+								try? self.moc.save()
+							}
 						}
+					} else {
+						self.dragAmount = .zero
 					}
-				} else {
-					self.dragAmount = .zero
-				}
 			}
 		)
 			.animation(.spring())
-    }
+	}
 }
 
 struct JokeCard_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
 		let joke = Joke(context: NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType))
 		joke.setup = "What do you call a hen who counts her eggs?"
 		joke.punchline = "A methemachiken"
 		joke.rating = "Sigh"
 		
 		return JokeCard(joke: joke)
-    }
+	}
 }
