@@ -25,7 +25,7 @@ struct JokeCard: View {
 						.frame(width: 300, height: 100)
 					
 					Text(self.joke.setup)
-						.font(.largeTitle)
+						.font(.title)
 						.lineLimit(10)
 						.padding([.horizontal])
 					
